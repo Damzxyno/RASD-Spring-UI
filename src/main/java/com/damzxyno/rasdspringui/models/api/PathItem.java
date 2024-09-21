@@ -1,5 +1,7 @@
-package com.damzxyno.rasdspringui.models;
+package com.damzxyno.rasdspringui.models.api;
 
+
+import com.damzxyno.rasdspringui.models.common.Operation;
 
 public class PathItem {
     private String summary = null;

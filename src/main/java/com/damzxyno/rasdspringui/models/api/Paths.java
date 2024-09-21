@@ -1,4 +1,5 @@
-package com.damzxyno.rasdspringui.models;
+package com.damzxyno.rasdspringui.models.api;
+
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

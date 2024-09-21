@@ -1,4 +1,4 @@
-package com.damzxyno.rasdspringui.models;
+package com.damzxyno.rasdspringui.models.common;
 
 import java.util.HashSet;
 import java.util.Set;

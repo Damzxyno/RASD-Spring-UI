@@ -1,8 +1,10 @@
-package com.damzxyno.rasdspringui.models;
+package com.damzxyno.rasdspringui.models.api;
+
+import com.damzxyno.rasdspringui.models.common.MetaData;
 
 public class RASD {
-    private String doc = "RASD";
-    private String version = "0.0.1";
+    private String doc;
+    private String version;
     private Paths paths = new Paths();
     private MetaData metaData = new MetaData();
 

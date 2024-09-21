@@ -1,124 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:wght@400;500&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sana-serif;
+    box-sizing: border-box;
+
+    /* Main Background and Text Colors */
+    --main-bg-color: rgba(255, 45, 43, .9); /* This seems like an error color */
+    --primary-bg-color: #f5f5f5; /* Light background */
+    --secondary-bg-color: #ffffff; /* White background */
+    --dark-bg-color: #2e2e2e; /* Dark background (for dark mode) */
+    --main-text-color: #333333; /* Dark gray text */
+    --secondary-text-color: #666666; /* Lighter gray for less important text */
+    --light-text-color: #ffffff; /* White text (for dark backgrounds) */
+    --http-method-label-color: #cccca8;
+    --http-path-item-border-color: #28a745;
+    --http-path-group-label-color: #28a745;
+
+    /* Buttons and Links */
+    --primary-button-bg: #007bff; /* Primary blue button */
+    --primary-button-text: #ffffff; /* White text for buttons */
+    --secondary-button-bg: #6c757d; /* Gray button for secondary actions */
+    --secondary-button-text: #ffffff;
+    --disabled-button-bg: #cccccc; /* Disabled state button background */
+    --disabled-button-text: #666666; /* Disabled button text */
+
+    /* Status Colors (Authorization Status) */
+    --success-color: #28a745; /* Green for success */
+    --error-color: #dc3545; /* Red for error */
+    --warning-color: #ffc107; /* Yellow for warning */
+    --info-color: #17a2b8; /* Blue for info or neutral state */
+
+    /* Borders and Accents */
+    --border-color: #dddddd; /* Light border */
+    --hover-bg-color: #f0f0f0; /* Background color on hover */
+    --focus-border-color: #007bff; /* Blue border on focus */
+
+    /* Alerts and Notifications */
+    --alert-bg-success: #d4edda; /* Light green background for success alerts */
+    --alert-bg-error: #f8d7da; /* Light red background for error alerts */
+    --alert-bg-warning: #fff3cd; /* Light yellow background for warnings */
+    --alert-bg-info: #d1ecf1; /* Light blue background for info */
+
+    /* Chart Colors (for data visualizations) */
+    --chart-primary: #007bff; /* Blue */
+    --chart-secondary: #28a745; /* Green */
+    --chart-error: #dc3545; /* Red for error in charts */
+    --chart-warning: #ffc107; /* Yellow for warnings */
+    --chart-info: #17a2b8; /* Light blue for neutral info in charts */
+
+    /* Dark Theme (Optional) */
+    --dark-bg-primary: #1c1c1c; /* Dark background */
+    --dark-bg-secondary: #2e2e2e; /* Darker secondary background */
+    --dark-text-primary: #f5f5f5; /* Light text for dark backgrounds */
+    --dark-text-secondary: #cccccc; /* Lighter text */
+    --dark-button-bg: #007bff; /* Blue button on dark mode */
+    --dark-button-text: #ffffff;
+}
+
+/* Example usage of colors */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #b3d7ff;
+    background-color: var(--primary-bg-color);
+    color: var(--main-text-color);
 }
 
-.section {
-    margin-bottom: 40px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+button.primary {
+    background-color: var(--primary-button-bg);
+    color: var(--primary-button-text);
+}
+
+button.secondary {
+    background-color: var(--secondary-button-bg);
+    color: var(--secondary-button-text);
+}
+
+button:disabled {
+    background-color: var(--disabled-button-bg);
+    color: var(--disabled-button-text);
+}
+
+/* Status styles */
+.status-success {
+    color: var(--success-color);
+}
+
+.status-error {
+    color: var(--error-color);
+}
+
+.status-warning {
+    color: var(--warning-color);
+}
+
+.status-info {
+    color: var(--info-color);
+}
+
+/* Alerts */
+.alert-success {
+    background-color: var(--alert-bg-success);
+    color: var(--success-color);
+}
+
+.alert-error {
+    background-color: var(--alert-bg-error);
+    color: var(--error-color);
+}
+
+.alert-warning {
+    background-color: var(--alert-bg-warning);
+    color: var(--warning-color);
+}
+
+.alert-info {
+    background-color: var(--alert-bg-info);
+    color: var(--info-color);
+}
+
+
+/* Main header styling */
+.content-header {
+    background-color: var(--header-bg-color, #343a40); /* Dark gray background */
     padding: 20px;
-}
-
-.section h2 {
-    margin-top: 0;
-    font-size: 24px;
-    color: #333333;
-}
-
-.path-item {
-    border: 1px solid #dcdcdc;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    background-color: #fafafa;
-}
-
-.path-entry {
-    border-left: 4px solid #007bff;
-    padding-left: 10px;
-}
-
-.operations {
-    margin-left: 20px;
-}
-
-.operation-heading {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.operation-method {
-    font-weight: bold;
-    color: #007bff;
-}
-
-.path-name {
-    font-weight: normal;
-    color: #555;
-    margin-left: 10px;
-}
-
-.auth-status {
-    font-size: 16px;
-    font-weight: bold;
-    color: #28a745;
-}
-
-.auth-status:not(:contains('Authenticated')) {
-    color: #dc3545;
-}
-
-.auth-req {
-    margin-top: 10px;
-}
-
-.required-red {
-    color: #d9534f;
-    font-weight: bold;
-}
-
-.role-list, .permission-list {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.role-item, .permission-item {
-    background-color: #e9ecef;
-    margin-bottom: 5px;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-/* Style for the "Mandatory Selection" text */
-.mandatory-selection-text {
-    color: #28a745; /* Green color */
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* Flexbox container to align selections side by side */
-.selection-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Gap between each selection item */
-}
-
-/* Individual selection item styles */
-.selection-item {
-    flex: 1;
-    padding: 15px;
-    border: 1px solid #dcdcdc;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-    min-width: 200px; /* Ensure a minimum width */
-}
-
-/* Style for the role and permission lists */
-.role-list, .permission-list {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.role-item, .permission-item {
-    background-color: #e9ecef;
-    margin-bottom: 5px;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 14px;
+    color: var(--header-text-color, #ffffff); /* White text for contrast */
     text-align: center;
 }
+
+/* Icon styling */
+.header-menu i {
+    font-size: 40px; /* Adjust icon size */
+    color: var(--icon-color, #28a745); /* Green for a security-related project */
+    margin-right: 15px;
+}
+
+/* H1 styling */
+.header-menu h1 {
+    font-size: 2.5rem; /* Recommended size for main headings */
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: bold;
+    color: var(--heading-color, #ffffff); /* White heading text */
+}
+
+/* General section styling */
+main section {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+/* Headings */
+h2, h3 {
+    color: var(--heading-color, #343a40); /* Darker heading color */
+    margin-bottom: 10px;
+    font-family: "Poppins", sans-serif;
+}
+
+h4 {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #d2691e;
+}
+
+h5 {
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    color: #c71585;
+
+}
+
+.auth-status{
+    font-size: 12px;
+}
+/* Metadata lists */
+ul {
+    list-style-type: disc; /* This will show bullets */
+    padding-left: 20px
+}
+
+ul li {
+    color: var(--main-text-color);
+    font-size: 12px/* Standard text color */
+}
+
+/* Metadata section styling */
+.row {
+    margin-bottom: 20px;
+}
+
+.row p {
+    font-weight: bold;
+    color: var(--main-text-color);
+}
+
+.row ul li {
+    background-color: var(--hover-bg-color);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+/* Key-value section (Tag Group) */
+.tag-group {
+    background-color: var(--primary-bg-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.tag-group h3 {
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--dark-bg-color);
+}
+
+/* HTTP method and operation styling */
+.http-path-item{
+    padding: 10px;
+    border: 2px solid var(--http-path-item-border-color);
+    border-radius: 15px 0;
+    margin-bottom: 15px;
+
+}
+
+.http-path-label-container {
+    display: flex; /* Use Flexbox for alignment */
+    justify-content: space-between; /* Space elements evenly, placing the icon on the right */
+    align-items: center;
+    background-color: var(--http-method-label-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px 0px 6px;
+}
+.label-key-icon{
+    padding: 10px;
+}
+.http-path-label {
+    display: flex; /* Use Flexbox for alignment */
+    align-items: center; /* Vertically align elements in the center */
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+.http-path-label span {
+    font-weight: bold;
+}
+
+.http-path-label i {
+    margin-left: 10px; /* Space between key and icon */
+    font-size: 1.2rem; /* Adjust icon size if necessary */
+}
+.key-label {
+    margin-left: 5px; /* Adjust spacing between method and key */
+}
+
+/*.http-path-label span:last-child {*/
+/*    color: var(--main-text-color); !* For the path text *!*/
+/*}*/
+
+/* HTTP method colors */
+.http-method-get {
+    color: #28a745; /* Green for GET */
+    font-weight: bold;
+}
+
+.http-method-post {
+    color: #007bff; /* Blue for POST */
+    font-weight: bold;
+}
+
+.http-method-put {
+    color: #9f7f1f; /* Yellow for PUT */
+    font-weight: bold;
+}
+
+.http-method-delete {
+    color: #dc3545; /* Red for DELETE */
+    font-weight: bold;
+}
+
+.http-method-patch {
+    color: #17a2b8; /* Teal for PATCH */
+    font-weight: bold;
+}
+
+.http-method-options {
+    color: #6c757d; /* Gray for OPTIONS */
+    font-weight: bold;
+}
+
+.http-method-head {
+    color: #6f42c1; /* Purple for HEAD */
+    font-weight: bold;
+}
+
+.http-method-trace {
+    color: #fd7e14; /* Orange for TRACE */
+    font-weight: bold;
+}
+
+.lock-icon {
+    color: #FF4D4D;
+}
+
+.unlock-icon {
+    color: 007BFF;
+}
+
+.mandatory-selective-container{
+    display: flex;
+}
+
+.mandatory-selective-item{
+    background-color: #7fffd414;
+    border: 2px var(--http-path-group-label-color) solid;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 15px;
+    width: 100%;
+    min-width: 24%;
+    max-width: 50%;
+}
+
+.footer-content {
+    height: 100px;
+    background-color: var(--header-bg-color, #343a40); /* Dark gray background */
+    padding: 20px;
+    color: var(--header-text-color, #ffffff); /* White text for contrast */
+    display: flex; /* Use Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: flex-end; /* Align items to the bottom */
+}
+
+.footer-content p {
+    margin: 0; /* Remove default margin */
+}
+

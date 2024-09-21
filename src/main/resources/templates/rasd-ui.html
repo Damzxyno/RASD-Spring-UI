@@ -5,35 +5,29 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/bootstrap-4.4.1-dist/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://kit.fontawesome.com/77e10afe5f.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-<div class="container">
-    <h1 class="text-center">RASD Report</h1>
-
-    <!-- Document Information -->
-    <div class="section">
-        <h2>Document Information</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <p><strong>Document:</strong> <span th:text="${rasd.doc}">RASD</span></p>
-            </div>
-            <div class="col-md-6">
-                <p><strong>Version:</strong> <span th:text="${rasd.version}">0.0.1</span></p>
-            </div>
-        </div>
+<header class="content-header">
+    <div class="header-menu">
+        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+        <h1>REST API Security Definition (RASD) - UI</h1>
     </div>
-
+</header>
+<main>
     <!-- MetaData Section -->
-    <div class="section">
+    <section>
         <h2>MetaData</h2>
         <div class="row">
+            <!-- Roles -->
             <div class="col-md-6" th:if="${not #lists.isEmpty(rasd.metaData.roles)}">
                 <p><strong>All Roles in System</strong></p>
                 <ul>
                     <li th:each="role : ${rasd.metaData.roles}" th:text="${role}">Role</li>
                 </ul>
             </div>
+
+            <!-- Permissions -->
             <div class="col-md-6" th:if="${not #lists.isEmpty(rasd.metaData.permissions)}">
                 <p><strong>Permissions:</strong></p>
                 <ul>
@@ -41,27 +35,116 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Paths Section -->
-    <div class="section paths-section">
-        <h2>Paths</h2>
-        <div th:each="entry : ${rasd.paths}" class="path-item">
-            <!-- Include fragment for GET method -->
-            <div th:replace="auth-frag :: authFragment(${entry.value.get}, ${entry}, 'GET')"></div>
-            <!-- Include fragment for POST method -->
-            <div th:replace="auth-frag :: authFragment(${entry.value.post}, ${entry}, 'POST')"></div>
-            <!-- Include fragment for PUT method -->
-            <div th:replace="auth-frag :: authFragment(${entry.value.put}, ${entry}, 'PUT')"></div>
-            <!-- Include fragment for DELETE method -->
-            <div th:replace="auth-frag :: authFragment(${entry.value.delete}, ${entry}, 'DELETE')"></div>
-            <!-- Include fragment for OPTION method -->
-            <div th:replace="auth-frag :: authFragment(${entry.value.options}, ${entry}, 'OPTION')"></div>
-            <!-- Include fragment for HEAD method -->
-            <div th:replace="auth-frag :: authFragment(${entry.value.head}, ${entry}, 'HEAD')"></div>
+    <!-- Tag Group Section -->
+    <section class="tag-group">
+        <div th:each="tgElement : ${rasd.tagGroup}">
+            <h3 th:text="${tgElement.key}"></h3>
+            <div th:each="tgItem : ${tgElement.value}">
+                <div  class="http-path-item" th:each="tgItemOperation : ${tgItem.value}">
+                    <div class="http-path-label-container">
+                        <p class="http-path-label">
 
+                            <span th:text="${tgItemOperation.httpMethod}"
+                                  th:class="${tgItemOperation.httpMethod == 'GET' ? 'http-method-get' :
+                                         tgItemOperation.httpMethod == 'POST' ? 'http-method-post' :
+                                         tgItemOperation.httpMethod == 'PUT' ? 'http-method-put' :
+                                         tgItemOperation.httpMethod == 'DELETE' ? 'http-method-delete' :
+                                         tgItemOperation.httpMethod == 'PATCH' ? 'http-method-patch' :
+                                         tgItemOperation.httpMethod == 'OPTIONS' ? 'http-method-options' :
+                                         tgItemOperation.httpMethod == 'HEAD' ? 'http-method-head' :
+                                         tgItemOperation.httpMethod == 'TRACE' ? 'http-method-trace' : ''}">
+                            </span>
+                            <span class="key-label" th:text="${tgItem.key}"></span>
+                        </p>
+                        <span class="label-key-icon">
+                            <i class="fa-solid" th:classappend="${tgItemOperation.isAuthenticated} ? 'fa-lock lock-icon' : 'fa-unlock unlock-icon'"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <p>
+                            <span class="auth-status" th:text="${tgItemOperation.isAuthenticated} ? 'Authenticated' : 'Not Authenticated'">Auth Status</span>
+                        </p>
+                        <div  th:if="${tgItemOperation.isAuthenticated}">
+                            <!-- STATIC -->
+                            <div th:if="${tgItemOperation.authorisationMod.staticMod != null}">
+                                <!-- Roles -->
+                                <div th:if="${not #lists.isEmpty(tgItemOperation.authorisationMod.staticMod.roles)}">
+                                    <h4>Required roles:</h4>
+                                    <ul th:each="role : ${tgItemOperation.authorisationMod.staticMod.roles}">
+                                        <li th:text="${role}"></li>
+                                    </ul>
+                                </div>
+                                <!-- Permissions -->
+                                <div th:if="${not #lists.isEmpty(tgItemOperation.authorisationMod.staticMod.permissions)}">
+                                    <h4>Required Permissions:</h4>
+                                    <ul th:each="permission : ${tgItemOperation.authorisationMod.staticMod.permissions}">
+                                        <li th:text="${permission}"></li>
+                                    </ul>
+                                </div>
+                                <!-- Accepted Time -->
+                                <div th:if="${not #lists.isEmpty(tgItemOperation.authorisationMod.staticMod.timeRulesAccept)}">
+                                    <h4>Permitted Access Time:</h4>
+                                    <ul th:each="time : ${tgItemOperation.authorisationMod.staticMod.timeRulesAccept}">
+                                        <li th:text="${time.key} + ' : ' + ${time.value.startTime} + ' - ' + ${time.value.endTime}"></li>
+                                    </ul>
+                                </div>
+                                <!-- Restricted Time -->
+                                <div th:if="${not #lists.isEmpty(tgItemOperation.authorisationMod.staticMod.timeRulesRestrict)}">
+                                    <h4>Restricted Time:</h4>
+                                    <ul th:each="time : ${tgItemOperation.authorisationMod.staticMod.timeRulesRestrict}">
+                                        <li th:text="${time.key} + ' : ' + ${time.value.startTime} + ' - ' + ${time.value.endTime}"></li>
+                                    </ul>
+                                </div>
+                                <!-- Accepted Locations -->
+                                <div th:if="${not #lists.isEmpty(tgItemOperation.authorisationMod.staticMod.acceptedLocation)}">
+                                    <h4>Permitted Location:</h4>
+                                    <ul th:each="location : ${tgItemOperation.authorisationMod.staticMod.acceptedLocation}">
+                                        <li th:text="${location}"></li>
+                                    </ul>
+                                </div>
+                                <!-- Restricted Locations -->
+                                <div th:if="${not #lists.isEmpty(tgItemOperation.authorisationMod.staticMod.restrictedLocation)}">
+                                    <h4>Restricted Location:</h4>
+                                    <ul th:each="location : ${tgItemOperation.authorisationMod.staticMod.restrictedLocation}">
+                                        <li th:text="${location}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- SELECTIVE MANDATORY -->
+                            <div th:if="${not #lists.isEmpty(tgItemOperation.authorisationMod.relativeMod)}">
+                                <h4>Mandatory Selective:</h4>
+                                <div class="mandatory-selective-container">
+                                    <div class="mandatory-selective-item" th:each="selection : ${tgItemOperation.authorisationMod.relativeMod}">
+                                        <!-- Roles -->
+                                        <div th:if="${not #lists.isEmpty(selection.roles)}">
+                                            <h5>Roles:</h5>
+                                            <ul th:each="role : ${selection.roles}">
+                                                <li th:text="${role}"></li>
+                                            </ul>
+                                        </div>
+                                        <!-- Permissions -->
+                                        <div th:if="${not #lists.isEmpty(selection.permissions)}">
+                                            <h5>Permissions:</h5>
+                                            <ul th:each="permission : ${selection.permissions}">
+                                                <li th:text="${permission}"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+</main>
+<footer class="footer-content">
+    <p>© 2024 RASD UI, Damzxyno </p>
+</footer>
 </div>
 
 <!-- Bootstrap JS and dependencies -->
