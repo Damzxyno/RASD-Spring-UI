@@ -14,8 +14,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 public class ReportingServiceImpl implements  ReportingService  {
@@ -52,7 +52,7 @@ public class ReportingServiceImpl implements  ReportingService  {
         RasdUI rasdUI = new RasdUI();
         rasdUI.setRasdApiUrl(rasdApiUrl);
 
-        Map<String, TagGroup> tagGroupMap = new HashMap<>();
+        Map<String, TagGroup> tagGroupMap = new TreeMap<>();
         rasdUI.setTagGroup(tagGroupMap);
 
         rasdUI.setMetaData(rasd.getMetaData());

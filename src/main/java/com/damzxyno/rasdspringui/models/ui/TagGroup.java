@@ -1,10 +1,7 @@
 package com.damzxyno.rasdspringui.models.ui;
 
-import com.damzxyno.rasdspringui.models.common.Operation;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeMap;
 
-public class TagGroup extends HashMap<String, List<OperationUI>> {
+public class TagGroup extends TreeMap<String, List<OperationUI>> {
 }
